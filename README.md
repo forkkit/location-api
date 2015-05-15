@@ -3,6 +3,8 @@
 The Geo API provides a REST based api for saving and retrieving geo location data. In the future it 
 may provide more feature rich data not provided directly by the geo-srv service.
 
+![Request Flow](geo-api.png)
+
 ### Prerequisites
 
 Install Consul
