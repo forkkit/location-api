@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"code.google.com/p/go.net/context"
 	"encoding/json"
 
 	read "github.com/myodc/geo-srv/proto/location/read"
@@ -9,6 +8,8 @@ import (
 	"github.com/myodc/go-micro/errors"
 	"github.com/myodc/go-micro/server"
 	api "github.com/myodc/micro/api/proto"
+
+	"golang.org/x/net/context"
 )
 
 type Location struct{}
@@ -26,7 +27,7 @@ func (l *Location) Read(ctx context.Context, req *api.Request, rsp *api.Response
 
 	response := &read.Response{}
 
-	err := client.Call(request, response)
+	err := client.Call(ctx, request, response)
 	if err != nil {
 		return errors.InternalServerError(server.Name+".read", "failed to read location")
 	}

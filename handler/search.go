@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"code.google.com/p/go.net/context"
 	"encoding/json"
 	common "github.com/myodc/geo-srv/proto"
 	search "github.com/myodc/geo-srv/proto/location/search"
@@ -10,6 +9,8 @@ import (
 	"github.com/myodc/go-micro/server"
 	api "github.com/myodc/micro/api/proto"
 	"strconv"
+
+	"golang.org/x/net/context"
 )
 
 func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Response) error {
@@ -43,7 +44,7 @@ func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Respon
 
 	response := &search.Response{}
 
-	err = client.Call(request, response)
+	err = client.Call(ctx, request, response)
 	if err != nil {
 		return errors.InternalServerError(server.Name+".search", "could not retrieve results")
 	}
