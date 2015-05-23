@@ -62,7 +62,7 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.InternalServerError(server.Name+".save", err.Error())
 	}
 
-	if err := broker.Publish(topic, data); err != nil {
+	if err := broker.Publish(ctx, topic, data); err != nil {
 		log.Errorf("Error publishing to topic %s: %v", topic, err)
 		return errors.InternalServerError(server.Name+".save", err.Error())
 	}
