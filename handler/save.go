@@ -39,7 +39,7 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 	var latlon map[string]float64
 	err := json.Unmarshal([]byte(extractValue(req.Post["location"])), &latlon)
 	if err != nil {
-		return errors.BadRequest(server.Name+".search", "invalid location")
+		return errors.BadRequest(server.Config().Name()+".search", "invalid location")
 	}
 
 	unix, _ := strconv.ParseInt(extractValue(req.Post["timestamp"]), 10, 64)
@@ -53,18 +53,18 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 	}
 
 	if len(entity.ID) == 0 {
-		return errors.BadRequest(server.Name+".save", "ID cannot be blank")
+		return errors.BadRequest(server.Config().Name()+".save", "ID cannot be blank")
 	}
 
 	data, err := json.Marshal(entity)
 	if err != nil {
 		log.Errorf("Error marshalling entity: %v", err)
-		return errors.InternalServerError(server.Name+".save", err.Error())
+		return errors.InternalServerError(server.Config().Name()+".save", err.Error())
 	}
 
 	if err := broker.Publish(ctx, topic, data); err != nil {
 		log.Errorf("Error publishing to topic %s: %v", topic, err)
-		return errors.InternalServerError(server.Name+".save", err.Error())
+		return errors.InternalServerError(server.Config().Name()+".save", err.Error())
 	}
 
 	log.Infof("Publishing entity ID %s", entity.ID)
