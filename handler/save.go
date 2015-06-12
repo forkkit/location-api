@@ -3,21 +3,20 @@ package handler
 import (
 	"encoding/json"
 	"strconv"
-	"sync"
 	"time"
 
-	"code.google.com/p/go.net/context"
 	log "github.com/golang/glog"
-	"github.com/myodc/geo-api/domain"
-	"github.com/myodc/go-micro/broker"
+	"github.com/myodc/go-micro/client"
 	"github.com/myodc/go-micro/errors"
 	"github.com/myodc/go-micro/server"
 	api "github.com/myodc/micro/api/proto"
+	proto "github.com/myodc/geo-srv/proto"
+
+	"golang.org/x/net/context"
 )
 
 var (
 	topic = "geo.location"
-	once  sync.Once
 )
 
 func extractValue(pair *api.Pair) string {
@@ -31,11 +30,6 @@ func extractValue(pair *api.Pair) string {
 }
 
 func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response) error {
-	once.Do(func() {
-		broker.Init()
-		broker.Connect()
-	})
-
 	var latlon map[string]float64
 	err := json.Unmarshal([]byte(extractValue(req.Post["location"])), &latlon)
 	if err != nil {
@@ -44,30 +38,28 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 
 	unix, _ := strconv.ParseInt(extractValue(req.Post["timestamp"]), 10, 64)
 
-	entity := &domain.Entity{
-		ID:        extractValue(req.Post["id"]),
+	entity := &proto.Entity{
+		Id:        extractValue(req.Post["id"]),
 		Type:      extractValue(req.Post["type"]),
-		Latitude:  latlon["latitude"],
-		Longitude: latlon["longitude"],
-		Timestamp: time.Unix(unix, 0).Unix(),
+		Location: &proto.Location{
+			Latitude:  latlon["latitude"],
+			Longitude: latlon["longitude"],
+			Timestamp: time.Unix(unix, 0).Unix(),
+		},
 	}
 
-	if len(entity.ID) == 0 {
+	if len(entity.Id) == 0 {
 		return errors.BadRequest(server.Config().Name()+".save", "ID cannot be blank")
 	}
 
-	data, err := json.Marshal(entity)
-	if err != nil {
-		log.Errorf("Error marshalling entity: %v", err)
-		return errors.InternalServerError(server.Config().Name()+".save", err.Error())
-	}
+	p := client.NewPublication(topic, entity)
 
-	if err := broker.Publish(ctx, topic, data); err != nil {
+	if err := client.Publish(ctx, p); err != nil {
 		log.Errorf("Error publishing to topic %s: %v", topic, err)
 		return errors.InternalServerError(server.Config().Name()+".save", err.Error())
 	}
 
-	log.Infof("Publishing entity ID %s", entity.ID)
+	log.Infof("Publishing entity ID %s", entity.Id)
 	rsp.StatusCode = 200
 	rsp.Body = `{}`
 	return nil
