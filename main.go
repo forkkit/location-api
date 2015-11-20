@@ -2,9 +2,9 @@ package main
 
 import (
 	log "github.com/golang/glog"
-	"github.com/myodc/geo-api/handler"
-	"github.com/myodc/go-micro/cmd"
-	"github.com/myodc/go-micro/server"
+	"github.com/micro/geo-api/handler"
+	"github.com/micro/go-micro/cmd"
+	"github.com/micro/go-micro/server"
 )
 
 func main() {

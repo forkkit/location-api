@@ -3,11 +3,11 @@ package handler
 import (
 	"encoding/json"
 
-	read "github.com/myodc/geo-srv/proto/location/read"
-	"github.com/myodc/go-micro/client"
-	"github.com/myodc/go-micro/errors"
-	"github.com/myodc/go-micro/server"
-	api "github.com/myodc/micro/api/proto"
+	read "github.com/micro/geo-srv/proto/location/read"
+	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/errors"
+	"github.com/micro/go-micro/server"
+	api "github.com/micro/micro/api/proto"
 
 	"golang.org/x/net/context"
 )

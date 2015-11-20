@@ -6,11 +6,11 @@ import (
 	"time"
 
 	log "github.com/golang/glog"
-	"github.com/myodc/go-micro/client"
-	"github.com/myodc/go-micro/errors"
-	"github.com/myodc/go-micro/server"
-	api "github.com/myodc/micro/api/proto"
-	proto "github.com/myodc/geo-srv/proto"
+	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/errors"
+	"github.com/micro/go-micro/server"
+	api "github.com/micro/micro/api/proto"
+	proto "github.com/micro/geo-srv/proto"
 
 	"golang.org/x/net/context"
 )

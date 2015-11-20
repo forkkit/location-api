@@ -2,12 +2,12 @@ package handler
 
 import (
 	"encoding/json"
-	common "github.com/myodc/geo-srv/proto"
-	search "github.com/myodc/geo-srv/proto/location/search"
-	"github.com/myodc/go-micro/client"
-	"github.com/myodc/go-micro/errors"
-	"github.com/myodc/go-micro/server"
-	api "github.com/myodc/micro/api/proto"
+	common "github.com/micro/geo-srv/proto"
+	search "github.com/micro/geo-srv/proto/location/search"
+	"github.com/micro/go-micro/client"
+	"github.com/micro/go-micro/errors"
+	"github.com/micro/go-micro/server"
+	api "github.com/micro/micro/api/proto"
 	"strconv"
 
 	"golang.org/x/net/context"
