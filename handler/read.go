@@ -3,7 +3,7 @@ package handler
 import (
 	"encoding/json"
 
-	read "github.com/micro/geo-srv/proto/location/read"
+	loc "github.com/micro/geo-srv/proto/location"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
@@ -21,11 +21,11 @@ func (l *Location) Read(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.BadRequest(server.Config().Name()+".read", "Require Id")
 	}
 
-	request := client.NewRequest("go.micro.srv.geo", "Location.Read", &read.Request{
+	request := client.NewRequest("go.micro.srv.geo", "Location.Read", &loc.ReadRequest{
 		Id: id,
 	})
 
-	response := &read.Response{}
+	response := &loc.ReadResponse{}
 
 	err := client.Call(ctx, request, response)
 	if err != nil {

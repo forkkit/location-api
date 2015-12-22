@@ -6,11 +6,11 @@ import (
 	"time"
 
 	log "github.com/golang/glog"
+	proto "github.com/micro/geo-srv/proto"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
 	api "github.com/micro/micro/api/proto"
-	proto "github.com/micro/geo-srv/proto"
 
 	"golang.org/x/net/context"
 )
@@ -39,9 +39,9 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 	unix, _ := strconv.ParseInt(extractValue(req.Post["timestamp"]), 10, 64)
 
 	entity := &proto.Entity{
-		Id:        extractValue(req.Post["id"]),
-		Type:      extractValue(req.Post["type"]),
-		Location: &proto.Location{
+		Id:   extractValue(req.Post["id"]),
+		Type: extractValue(req.Post["type"]),
+		Location: &proto.Point{
 			Latitude:  latlon["latitude"],
 			Longitude: latlon["longitude"],
 			Timestamp: time.Unix(unix, 0).Unix(),

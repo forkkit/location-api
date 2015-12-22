@@ -3,7 +3,7 @@ package handler
 import (
 	"encoding/json"
 	common "github.com/micro/geo-srv/proto"
-	search "github.com/micro/geo-srv/proto/location/search"
+	loc "github.com/micro/geo-srv/proto/location"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
@@ -32,8 +32,8 @@ func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Respon
 		return errors.BadRequest(server.Config().Name()+".search", "num_entities must be greater than 0")
 	}
 
-	request := client.NewRequest("go.micro.srv.geo", "Location.Search", &search.Request{
-		Center: &common.Location{
+	request := client.NewRequest("go.micro.srv.geo", "Location.Search", &loc.SearchRequest{
+		Center: &common.Point{
 			Latitude:  latlon["latitude"],
 			Longitude: latlon["longitude"],
 		},
@@ -42,7 +42,7 @@ func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Respon
 		Type:        typ,
 	})
 
-	response := &search.Response{}
+	response := &loc.SearchResponse{}
 
 	err = client.Call(ctx, request, response)
 	if err != nil {
