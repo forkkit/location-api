@@ -21,15 +21,15 @@ func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Respon
 	var latlon map[string]float64
 	err := json.Unmarshal([]byte(extractValue(req.Post["center"])), &latlon)
 	if err != nil {
-		return errors.BadRequest(server.Config().Name()+".search", "invalid center point")
+		return errors.BadRequest(server.DefaultOptions().Name+".search", "invalid center point")
 	}
 
 	if len(typ) == 0 {
-		return errors.BadRequest(server.Config().Name()+".search", "type cannot be blank")
+		return errors.BadRequest(server.DefaultOptions().Name+".search", "type cannot be blank")
 	}
 
 	if entities == 0 {
-		return errors.BadRequest(server.Config().Name()+".search", "num_entities must be greater than 0")
+		return errors.BadRequest(server.DefaultOptions().Name+".search", "num_entities must be greater than 0")
 	}
 
 	request := client.NewRequest("go.micro.srv.geo", "Location.Search", &loc.SearchRequest{
@@ -46,7 +46,7 @@ func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Respon
 
 	err = client.Call(ctx, request, response)
 	if err != nil {
-		return errors.InternalServerError(server.Config().Name()+".search", "could not retrieve results")
+		return errors.InternalServerError(server.DefaultOptions().Name+".search", "could not retrieve results")
 	}
 
 	b, _ := json.Marshal(response.Entities)

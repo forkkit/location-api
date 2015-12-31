@@ -18,7 +18,7 @@ func (l *Location) Read(ctx context.Context, req *api.Request, rsp *api.Response
 	id := extractValue(req.Post["id"])
 
 	if len(id) == 0 {
-		return errors.BadRequest(server.Config().Name()+".read", "Require Id")
+		return errors.BadRequest(server.DefaultOptions().Name+".read", "Require Id")
 	}
 
 	request := client.NewRequest("go.micro.srv.geo", "Location.Read", &loc.ReadRequest{
@@ -29,7 +29,7 @@ func (l *Location) Read(ctx context.Context, req *api.Request, rsp *api.Response
 
 	err := client.Call(ctx, request, response)
 	if err != nil {
-		return errors.InternalServerError(server.Config().Name()+".read", "failed to read location")
+		return errors.InternalServerError(server.DefaultOptions().Name+".read", "failed to read location")
 	}
 
 	b, _ := json.Marshal(response.Entity)
