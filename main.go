@@ -1,28 +1,29 @@
 package main
 
 import (
+	"time"
+
 	log "github.com/golang/glog"
 	"github.com/micro/geo-api/handler"
-	"github.com/micro/go-micro/cmd"
-	"github.com/micro/go-micro/server"
+	"github.com/micro/go-micro"
 )
 
 func main() {
-	// optionally setup command line usage
-	cmd.Init()
-
-	// Initialise Server
-	server.Init(
-		server.Name("go.micro.api.geo"),
+	service := micro.NewService(
+		micro.Name("go.micro.api.geo"),
+		micro.RegisterTTL(time.Minute),
+		micro.RegisterInterval(time.Second*30),
 	)
 
-	// Register Handlers
-	server.Handle(
-		server.NewHandler(new(handler.Location)),
+	service.Init()
+
+	service.Server().Handle(
+		service.Server().NewHandler(
+			new(handler.Location),
+		),
 	)
 
-	// Run server
-	if err := server.Run(); err != nil {
+	if err := service.Run(); err != nil {
 		log.Fatal(err)
 	}
 }
