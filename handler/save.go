@@ -2,10 +2,10 @@ package handler
 
 import (
 	"encoding/json"
+	"log"
 	"strconv"
 	"time"
 
-	log "github.com/golang/glog"
 	proto "github.com/micro/geo-srv/proto"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/errors"
@@ -55,11 +55,11 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 	p := client.NewPublication(topic, entity)
 
 	if err := client.Publish(ctx, p); err != nil {
-		log.Errorf("Error publishing to topic %s: %v", topic, err)
+		log.Printf("Error publishing to topic %s: %v", topic, err)
 		return errors.InternalServerError(server.DefaultOptions().Name+".save", err.Error())
 	}
 
-	log.Infof("Publishing entity ID %s", entity.Id)
+	log.Printf("Publishing entity ID %s", entity.Id)
 	rsp.StatusCode = 200
 	rsp.Body = `{}`
 	return nil
