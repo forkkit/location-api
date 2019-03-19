@@ -3,11 +3,11 @@ package handler
 import (
 	"encoding/json"
 
-	loc "github.com/micro/geo-srv/proto/location"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
 	api "github.com/micro/micro/api/proto"
+	loc "github.com/microhq/geo-srv/proto/location"
 
 	"golang.org/x/net/context"
 )

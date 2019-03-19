@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"time"
 
-	proto "github.com/micro/geo-srv/proto"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
 	api "github.com/micro/micro/api/proto"
+	proto "github.com/microhq/geo-srv/proto"
 
 	"golang.org/x/net/context"
 )
@@ -52,7 +52,7 @@ func (l *Location) Save(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.BadRequest(server.DefaultOptions().Name+".save", "ID cannot be blank")
 	}
 
-	p := client.NewPublication(topic, entity)
+	p := client.NewMessage(topic, entity)
 
 	if err := client.Publish(ctx, p); err != nil {
 		log.Printf("Error publishing to topic %s: %v", topic, err)

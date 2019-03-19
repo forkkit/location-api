@@ -4,8 +4,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/micro/geo-api/handler"
 	"github.com/micro/go-micro"
+	"github.com/microhq/geo-api/handler"
 )
 
 func main() {
