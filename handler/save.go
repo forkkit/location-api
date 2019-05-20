@@ -10,7 +10,7 @@ import (
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
 	api "github.com/micro/micro/api/proto"
-	proto "github.com/microhq/geo-srv/proto"
+	proto "github.com/microhq/location-srv/proto"
 
 	"golang.org/x/net/context"
 )

@@ -5,12 +5,12 @@ import (
 	"time"
 
 	"github.com/micro/go-micro"
-	"github.com/microhq/geo-api/handler"
+	"github.com/microhq/location-api/handler"
 )
 
 func main() {
 	service := micro.NewService(
-		micro.Name("go.micro.api.geo"),
+		micro.Name("go.micro.api.location"),
 		micro.RegisterTTL(time.Minute),
 		micro.RegisterInterval(time.Second*30),
 	)

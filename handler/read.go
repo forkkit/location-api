@@ -7,7 +7,7 @@ import (
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
 	api "github.com/micro/micro/api/proto"
-	loc "github.com/microhq/geo-srv/proto/location"
+	loc "github.com/microhq/location-srv/proto/location"
 
 	"golang.org/x/net/context"
 )
@@ -21,7 +21,7 @@ func (l *Location) Read(ctx context.Context, req *api.Request, rsp *api.Response
 		return errors.BadRequest(server.DefaultOptions().Name+".read", "Require Id")
 	}
 
-	request := client.NewRequest("go.micro.srv.geo", "Location.Read", &loc.ReadRequest{
+	request := client.NewRequest("go.micro.srv.location", "Location.Read", &loc.ReadRequest{
 		Id: id,
 	})
 

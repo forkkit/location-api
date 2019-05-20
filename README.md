@@ -1,9 +1,9 @@
-# Geo API
+# Location API
 
-The Geo API provides a REST based api for saving and retrieving geo location data. In the future it 
-may provide more feature rich data not provided directly by the geo-srv service.
+The Location API provides a REST based api for saving and retrieving geo location data. In the future it 
+may provide more feature rich data not provided directly by the location-srv service.
 
-![Request Flow](geo-api.png)
+![Request Flow](location-api.png)
 
 ### Prerequisites
 
@@ -26,7 +26,7 @@ I0514 23:18:27.880691   35822 server.go:76] Registering go.micro.api.geo-2526ea4
 
 Run geo-serv Service
 ```
-$ geo-srv
+$ location-srv
 I0514 23:56:06.938578   36114 rpc_server.go:156] Rpc handler /_rpc
 I0514 23:56:06.938845   36114 ingester.go:17] Starting topic geo.location subscriber
 I0514 23:56:06.939094   36114 http_broker.go:69] Broker Listening on [::]:55539
@@ -49,7 +49,7 @@ I0514 23:22:07.413586   35843 server.go:76] Registering go.micro.api-a800f702-fa
 
 Test Service
 ```
-$ go run geo-api/examples/client_request.go
+$ go run location-api/examples/client_request.go
 Saved entity: map[location:[{"latitude": 51.516509, "longitude": 0.124615}] id:[id123] type:[runner]]
 Read entity: {"id":"id123","type":"runner","location":{"latitude":51.516509,"longitude":0.124615}}
 Search results: [{"id":"id123","type":"runner","location":{"latitude":51.516509,"longitude":0.124615}}]

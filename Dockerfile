@@ -1,3 +1,3 @@
 FROM scratch
-ADD geo-api /
-ENTRYPOINT [ "/geo-api" ]
+ADD location-api /
+ENTRYPOINT [ "/location-api" ]

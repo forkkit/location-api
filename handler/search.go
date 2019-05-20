@@ -6,8 +6,8 @@ import (
 	"github.com/micro/go-micro/errors"
 	"github.com/micro/go-micro/server"
 	api "github.com/micro/micro/api/proto"
-	common "github.com/microhq/geo-srv/proto"
-	loc "github.com/microhq/geo-srv/proto/location"
+	common "github.com/microhq/location-srv/proto"
+	loc "github.com/microhq/location-srv/proto/location"
 	"strconv"
 
 	"golang.org/x/net/context"
@@ -32,7 +32,7 @@ func (l *Location) Search(ctx context.Context, req *api.Request, rsp *api.Respon
 		return errors.BadRequest(server.DefaultOptions().Name+".search", "num_entities must be greater than 0")
 	}
 
-	request := client.NewRequest("go.micro.srv.geo", "Location.Search", &loc.SearchRequest{
+	request := client.NewRequest("go.micro.srv.location", "Location.Search", &loc.SearchRequest{
 		Center: &common.Point{
 			Latitude:  latlon["latitude"],
 			Longitude: latlon["longitude"],
